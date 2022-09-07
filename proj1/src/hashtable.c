@@ -43,11 +43,30 @@ HashTable *createHashTable(int size, unsigned int (*hashFunction)(void *),
 
 /* Task 1.2 */
 void insertData(HashTable *table, void *key, void *data) {
+  int keyNum = table->hashFunction(key);
+  struct HashBucketEntry *newEntry = malloc(sizeof(struct HashBucketEntry));
+  if (NULL == newEntry) {
+    fprintf(stderr, "malloc failed \n");
+    exit(1);
+  }
+  newEntry->key = key;
+  newEntry->data = data;
+  newEntry->next = NULL;
+  if (NULL == table->buckets[keyNum]) {
+    table->buckets[keyNum] = newEntry;
+  } else {
+    struct HashBucketEntry *pos = table->buckets[keyNum];
+    while (pos->next != NULL) {
+      pos = pos->next;
+    }
+    pos->next = newEntry;
+    return;
+  }
   // -- TODO --
   // HINT:
   // 1. Find the right hash bucket location with table->hashFunction.
   // 2. Allocate a new hash bucket entry struct.
-  // 3. Append to the linked list or create it if it does not yet exist. 
+  // 3. Append to the linked list or create it if it does not yet exist.
 }
 
 /* Task 1.3 */
