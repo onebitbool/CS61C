@@ -80,10 +80,12 @@ void *findData(HashTable *table, void *key) {
 
 /* Task 2.1 */
 unsigned int stringHash(void *s) {
-  // -- TODO --
-  fprintf(stderr, "need to implement stringHash\n");
-  /* To suppress compiler warning until you implement this function, */
-  return 0;
+  unsigned int hashCode = 0;
+  char *str = (char *)s;
+  for (int i = 0; i < strlen(str); i++) {
+    hashCode = hashCode * 31 + (unsigned int)str[i];
+  }
+  return hashCode;
 }
 
 /* Task 2.2 */
