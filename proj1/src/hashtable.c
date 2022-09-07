@@ -71,7 +71,7 @@ void *findData(HashTable *table, void *key) {
   int isEquals;
   while (pos != NULL) {
     isEquals = table->equalFunction(pos->key, key);
-    if (isEquals == 0) {
+    if (isEquals) {
       return pos->data;
     }
   }
@@ -90,8 +90,18 @@ unsigned int stringHash(void *s) {
 
 /* Task 2.2 */
 int stringEquals(void *s1, void *s2) {
-  // -- TODO --
-  fprintf(stderr, "You need to implement stringEquals");
-  /* To suppress compiler warning until you implement this function */
-  return 0;
+  char *str1 = (char *)s1;
+  char *str2 = (char *)s2;
+  if (strlen(str1) != strlen(str2)) {
+    return 0;
+  }
+  
+  while (*str1 != '\0' && *str2 != '\0') {
+    if (*str1 != *str2) {
+      return 0;
+    }
+    str1++;
+    str2++;
+  }
+  return 1;
 }
