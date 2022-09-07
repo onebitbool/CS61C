@@ -43,7 +43,7 @@ HashTable *createHashTable(int size, unsigned int (*hashFunction)(void *),
 
 /* Task 1.2 */
 void insertData(HashTable *table, void *key, void *data) {
-  int keyNum = table->hashFunction(key);
+  int keyNum = table->hashFunction(key) % table->size;
   struct HashBucketEntry *newEntry = malloc(sizeof(struct HashBucketEntry));
   if (NULL == newEntry) {
     fprintf(stderr, "malloc failed \n");
@@ -66,7 +66,7 @@ void insertData(HashTable *table, void *key, void *data) {
 
 /* Task 1.3 */
 void *findData(HashTable *table, void *key) {
-  int keyNum = table->hashFunction(key);
+  int keyNum = table->hashFunction(key) % table->size;
   struct HashBucketEntry *pos = table->buckets[keyNum];
   int isEquals;
   while (pos != NULL) {
