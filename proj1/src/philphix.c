@@ -67,8 +67,53 @@ int main(int argc, char **argv) {
 
 /* Task 3 */
 void readDictionary(char *dictName) {
-  // -- TODO --
-  fprintf(stderr, "You need to implement readDictionary\n");
+  FILE *fp;
+  int size = 60;
+  char *word = (char *)malloc(size * sizeof(char));
+  char *data[2];
+  int tmp;
+  int startRead = 0;
+  int readNum = 0; // nth data from current line, it only is 0/1 normally.
+  int pos = 0;
+  fp = fopen(dictName, "r");
+  if (fp == NULL) {
+    fprintf(stderr, "cannot open the file");
+    exit(61);
+  }
+  while(1) {
+    tmp = getc(fp);
+    if (tmp == ' ' || tmp == '\t' || tmp == '\n' || tmp == EOF) {
+      if (startRead == 1) {
+        word[pos] = '\0';
+        if (readNum < 2) {
+          data[readNum] = (char *)malloc((pos + 1) * sizeof(char));
+          memcpy(data[readNum], word, pos + 1);
+          if (readNum == 1) {
+            insertData(dictionary, data[0], data[1]);
+          }
+        } else {
+          fprintf(stderr, "more than 2 words in some line");
+        }
+        startRead = 0;
+        pos = 0;
+        readNum++;
+      }
+      if (tmp == '\n') {
+        readNum = 0;
+      }
+      if (tmp == EOF) {
+        break;
+      }
+    } else {
+      if (size <= pos + 2) {
+        word = (char *)realloc(word, size * 2);
+        size *= 2;
+      }
+      startRead = 1;
+      word[pos++] = tmp;
+    }
+  }
+  return;
 }
 
 /* Task 4 */
