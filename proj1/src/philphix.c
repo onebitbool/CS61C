@@ -113,11 +113,67 @@ void readDictionary(char *dictName) {
       word[pos++] = tmp;
     }
   }
+  free(word);
+  fclose(fp);
   return;
+}
+
+/**
+ * convert string to lowcase
+**/
+char *str2lower(char *str) {
+  char *p = str;
+  while(*p != '\0') {
+    *p = tolower(*p);
+    p++;
+  }
+  return str;
 }
 
 /* Task 4 */
 void processInput() {
-  // -- TODO --
-  fprintf(stderr, "You need to implement processInput\n");
+  int size = 60;
+  char *word = (char *)malloc(size * sizeof(char));
+  char *dupWord;
+  char *replaceStr;
+  int reading = 0;
+  int tmp;
+  int pos = 0;
+  while(1) {
+    tmp = getchar();
+    if (isalnum(tmp)) {
+      if (size <= pos + 2) {
+        word = (char *)realloc(word, size * 2);
+        size *= 2;
+      }
+      reading = 1;
+      word[pos++] = tmp;
+    } else {
+      if (reading == 1) {
+        word[pos] = '\0';
+        dupWord = malloc((pos + 1) * sizeof(char));
+        if (dupWord == NULL) {
+          fprintf(stderr, "malloc error\n");
+        }
+        strcpy(dupWord, word);
+        replaceStr = findData(dictionary, word);
+        if (replaceStr == NULL)
+          replaceStr = findData(dictionary, str2lower(word + 1) - 1);
+        if (replaceStr == NULL)
+          replaceStr = findData(dictionary, str2lower(word));
+        if (replaceStr == NULL)
+          replaceStr = dupWord;
+        printf("%s", replaceStr);
+        free(dupWord);
+      }
+      if (tmp == EOF) {
+        break;
+      }
+      putchar(tmp);
+      reading = 0;
+      pos = 0;
+    }
+  }
+  free(word);
+  return;
 }
