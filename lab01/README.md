@@ -1,7 +1,12 @@
 # lab01
-## Progess
-1. - [x] exercise1
-2. - [ ] exercise2
-3. - [ ] exercise3
-4. - [ ] exercise4
-5. - [ ] exercise5
+## Progress
+
+- [x] exercise1
+
+- [x] exercise2
+
+- [x] exercise3
+
+- [x] exercise4
+
+- [ ] exercise5 : *do a survey only for UCB student*
