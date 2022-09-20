@@ -37,28 +37,28 @@ main:
     sw s3, 12(sp)
     sw ra, 16(sp)
     # END PROLOGUE
-    addi t0, x0, 0
+    addi t0, x0, 0 # t0 to is variable i, start at 0
     addi s0, x0, 0
     la s1, source
     la s2, dest
 loop:
-    slli s3, t0, 2
-    add t1, s1, s3
-    lw t2, 0(t1)
-    beq t2, x0, exit
-    add a0, x0, t2
-    addi sp, sp, -8
+    slli s3, t0, 2 # s3 left shift logically to make offset
+    add t1, s1, s3 # t1 make memory source array address
+    lw t2, 0(t1) # assign element of source array to t2 
+    beq t2, x0, exit # exit if element is 0
+    add a0, x0, t2 # assign element to a0, a0 is parameter
+    addi sp, sp, -8 
     sw t0, 0(sp)
     sw t2, 4(sp)
     jal fun
     lw t0, 0(sp)
     lw t2, 4(sp)
     addi sp, sp, 8
-    add t2, x0, a0
-    add t3, s2, s3
-    sw t2, 0(t3)
-    add s0, s0, t2
-    addi t0, t0, 1
+    add t2, x0, a0 # assign return value to t2
+    add t3, s2, s3 # make dest array address
+    sw t2, 0(t3) # assign return value to dest
+    add s0, s0, t2 # s0 add return value
+    addi t0, t0, 1 # loop variable add one
     jal x0, loop
 exit:
     add a0, x0, s0
