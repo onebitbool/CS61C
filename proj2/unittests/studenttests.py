@@ -1,4 +1,4 @@
-from unittest import TestCase
+from unittest import TestCase, result
 from framework import AssemblyTest, print_coverage
 
 """
@@ -33,27 +33,26 @@ class TestAbsLoss(TestCase):
     def test_simple(self):
         # load the test for abs_loss.s
         t = AssemblyTest(self, "abs_loss.s")
-        raise NotImplementedError("TODO")
         # create array0 in the data section
-        # TODO
+        array0 = [1, 2, 3, 4, 5, 6]
         # load address of `array0` into register a0
-        # TODO
+        t.input_array("a0", array0)
         # create array1 in the data section
-        # TODO
+        array1 = [2, 3, 4, 1, 5, 5]
         # load address of `array1` into register a1
-        # TODO
+        t.input_array("a1", array1)
         # set a2 to the length of the array
-        # TODO
+        t.input_scalar("a2", len(array0))
         # create a result array in the data section (fill values with -1)
-        # TODO
+        result_array = [-1] * len(array0)
         # load address of `array2` into register a3
-        # TODO
+        t.input_array("a3", result_array)
         # call the `abs_loss` function
-        # TODO
+        t.call("abs_loss")
         # check that the result array contains the correct output
-        # TODO
+        t.check_array(result_array, [1, 1, 1, 3, 0, 1])
         # check that the register a0 contains the correct output
-        # TODO
+        t.check_scalar("a0", 7)
         # generate the `assembly/TestAbsLoss_test_simple.s` file and run it through venus
         t.execute()
 

@@ -31,3 +31,12 @@
 
 
 ## Here's what I did in project 2:
+
+### PartA
+
+- [x] task1
+- [x] task2
+- [x] task3
+- [x] task4
+- [x] task5
+- [ ] task6 **NOT FINISH because this task cannot be tested**
